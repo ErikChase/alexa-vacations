@@ -4,7 +4,7 @@ let salesforce = require("./salesforce");
 
 exports.SearchVacations = (slots, session, response) => {
     session.attributes.stage = "find_vacations";
-    salesforce.findVactions()
+    salesforce.findVacations()
             .then(vacations => {
                 if (vacations && vacations.length>0) {
                     let text = `<p>OK, here is what I found for upcoming vacations: </p>`;
