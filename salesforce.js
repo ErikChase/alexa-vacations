@@ -26,62 +26,50 @@ let login = () => {
     });
 };
 
-let findProperties = (params) => {
+let findVacationByDate = (params) => {
     let where = "";
     if (params) {
         let parts = [];
-        if (params.id) parts.push(`id='${params.id}'`);
-        if (params.city) parts.push(`city__c='${params.city}'`);
-        if (params.bedrooms) parts.push(`beds__c=${params.bedrooms}`);
-        if (params.priceMin) parts.push(`price__c>=${params.priceMin}`);
-        if (params.priceMax) parts.push(`price__c<=${params.priceMax}`);
+        if (params.id) parts.push(`Start_Date__c='${params.date}'`);
+        if (params.city) parts.push(`City__c='${params.city}'`);
         if (parts.length>0) {
             where = "WHERE " + parts.join(' AND ');
         }
     }
     return new Promise((resolve, reject) => {
-        let q = `SELECT id,
-                    title__c,
-                    address__c,
-                    city__c,
-                    state__c,
-                    price__c,
-                    beds__c,
-                    baths__c,
-                    picture__c
-                FROM property__c
+        let q = `SELECT Id,
+                    Name,
+                    City__c,
+                    Start_Date__c,
+                    End_Date__c,
+                    Number_of_Days__c,
+                    Total_Cost__c,
+                FROM Vacation__c
                 ${where}
-                LIMIT 5`;
+                LIMIT 1`;
         org.query({query: q}, (err, resp) => {
             if (err) {
                 reject(err);
             } else {
-                resolve(resp.records);
+                resolve(resp.records[0]);
             }
         });
     });
 
 };
 
-let findPriceChanges = () => {
+let findVacations = () => {
     return new Promise((resolve, reject) => {
-        let q = `SELECT
-                    OldValue,
-                    NewValue,
-                    CreatedDate,
-                    Field,
-                    Parent.Id,
-                    Parent.title__c,
-                    Parent.address__c,
-                    Parent.city__c,
-                    Parent.state__c,
-                    Parent.price__c,
-                    Parent.beds__c,
-                    Parent.baths__c,
-                    Parent.picture__c
-                FROM property__history
-                WHERE field = 'Price__c'
-                ORDER BY CreatedDate DESC
+        let q = `SELECT Id,
+                    Name,
+                    City__c,
+                    Start_Date__c,
+                    End_Date__c,
+                    Number_of_Days__c,
+                    Total_Cost__c,
+                FROM Vacation__c
+                WHERE  Start_Date__c > TODAY()
+                ORDER BY Start_Date__c ASC
                 LIMIT 3`;
         org.query({query: q}, (err, resp) => {
             if (err) {
@@ -94,22 +82,20 @@ let findPriceChanges = () => {
 };
 
 
-let createCase = (propertyId, customerName, customerId) => {
+let createExpense = (expesnseType, costAmount, vacationId) => {
 
     return new Promise((resolve, reject) => {
-        let c = nforce.createSObject('Case');
-        c.set('subject', `Contact ${customerName} (Facebook Customer)`);
-        c.set('description', "Facebook id: " + customerId);
-        c.set('origin', 'Facebook Bot');
-        c.set('status', 'New');
-        c.set('Property__c', propertyId);
+        let e = nforce.createSObject('Expense__c');
+        e.set('Type__c', expesnseType);
+        e.set('Cost__c', costAmount);
+        e.set('Vacation__c', vacationId);
 
-        org.insert({sobject: c}, err => {
+        org.insert({sobject: e}, err => {
             if (err) {
                 console.error(err);
                 reject("An error occurred while creating a case");
             } else {
-                resolve(c);
+                resolve(e);
             }
         });
     });
