@@ -2,7 +2,7 @@
 
 let salesforce = require("./salesforce");
 
-exports.SearchHouses = (slots, session, response) => {
+exports.SearchVacations = (slots, session, response) => {
     session.attributes.stage = "find_vacations";
     salesforce.findVactions()
             .then(vacations => {
