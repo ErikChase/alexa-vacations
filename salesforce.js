@@ -49,6 +49,7 @@ let findVacationByDate = (params) => {
                 LIMIT 1`;
         org.query({query: q}, (err, resp) => {
             if (err) {
+                console.error(err)
                 reject(err);
             } else {
                 resolve(resp.records[0]);
@@ -71,9 +72,9 @@ let findVacations = () => {
                 WHERE  Start_Date__c > TODAY()
                 ORDER BY Start_Date__c ASC
                 LIMIT 3`;
-
         org.query({query: q}, (err, resp) => {
             if (err) {
+                console.error(err)
                 reject("An error as occurred");
             } else {
                 resolve(resp.records);
