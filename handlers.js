@@ -31,7 +31,7 @@ exports.AddExpense = (slots, session, response) => {
 exports.AnswerDate = (slots, session, response) => {
     if (session.attributes.stage === "ask_date") {
         session.attributes.date = slots.Date.value;
-        salesforce.findVactionByDate({date: session.attributes.date})
+        salesforce.findVacationByDate({date: session.attributes.date})
             .then(vacation => {
                 if (vacation && vacation.length>0) {
                     session.attributes.vacationId = vacation.get("Id");
