@@ -25,7 +25,7 @@ exports.SearchHouses = (slots, session, response) => {
 
 exports.AddExpense = (slots, session, response) => {
     session.attributes.stage = "ask_date";
-    response.ask("OK, add expense to the vacation in which city?");
+    response.ask("OK, add expense to the vacation starting when?");
 };
 
 exports.AnswerDate = (slots, session, response) => {
