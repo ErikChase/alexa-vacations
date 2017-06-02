@@ -105,6 +105,6 @@ let createExpense = (expesnseType, costAmount, vacationId) => {
 login();
 
 exports.org = org;
-exports.findProperties = findProperties;
-exports.findPriceChanges = findPriceChanges;
-exports.createCase = createCase;
+exports.findVacationByDate = findVacationByDate;
+exports.findVacations = findVacations;
+exports.createExpense = createExpense;
