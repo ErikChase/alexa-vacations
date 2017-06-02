@@ -43,7 +43,7 @@ let findVacationByDate = (params) => {
                     Start_Date__c,
                     End_Date__c,
                     Number_of_Days__c,
-                    Total_Cost__c,
+                    Total_Cost__c
                 FROM Vacation__c
                 ${where}
                 LIMIT 1`;
@@ -66,11 +66,12 @@ let findVacations = () => {
                     Start_Date__c,
                     End_Date__c,
                     Number_of_Days__c,
-                    Total_Cost__c,
-                FROM Vacation__c
+                    Total_Cost__c
+                FROM Vacation__c 
                 WHERE  Start_Date__c > TODAY()
                 ORDER BY Start_Date__c ASC
                 LIMIT 3`;
+
         org.query({query: q}, (err, resp) => {
             if (err) {
                 reject("An error as occurred");
