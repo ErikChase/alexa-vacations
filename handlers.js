@@ -63,7 +63,7 @@ exports.AnswerType = (slots, session, response) => {
 
 exports.AnswerCost = (slots, session, response) => {
     if (session.attributes.stage === "ask_cost") {
-        session.attributes.type = slots.Cost.value;
+        session.attributes.cost = slots.Cost.value;
         session.attributes.stage = "create_expense";
         salesforce.createExpense(session.attributes.type, session.attributes.cost, session.attributes.vacationId)
             .then(expense => {
