@@ -71,12 +71,10 @@ exports.AnswerCost = (slots, session, response) => {
                     response.say('Ok, I have add a ${expense.get("Type__c")} expense of $${expense.get("Cost__c") to your ${session.attributes.vacationName} vacation.')
                 }
             })
-        // response.ask("Around what price?");
-    // } else if (session.attributes.stage === "ask_price") {
-        // let price = slots.NumericAnswer.value;
-        // session.attributes.price = price;
-        // let priceMin = price * 0.8;
-        // let priceMax = price * 1.2;
+            .catch((err) => {
+                console.error(err);
+                response.say("Oops. Something went wrong");
+            });
         
     } else {
         response.say("Sorry, I didn't understand that");
