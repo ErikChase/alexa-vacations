@@ -95,7 +95,7 @@ let createExpense = (expesnseType, costAmount, vacationId) => {
         org.insert({sobject: e}, err => {
             if (err) {
                 console.error(err);
-                reject("An error occurred while creating a case");
+                reject("An error occurred while creating an expense");
             } else {
                 resolve(e);
             }

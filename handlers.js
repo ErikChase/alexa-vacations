@@ -10,7 +10,7 @@ exports.SearchVacations = (slots, session, response) => {
                     let text = `<p>OK, here is what I found for upcoming vacations: </p>`;
                     text += '<p>You have ${vacations.length} vacations coming up: </p>'
                     vacations.forEach(vaca => {
-                        text += `${vaca.get("Name")}, in ${vaca.get("City__c")} for ${vaca.get("Number_Of_Days__C")} days. Starts on ${vaca.get("Start_Date__c")} and cost $${vaca.get("Cost__c")}. <break time="0.5s" /> `;
+                        text += `${vaca.get("Name")}, in ${vaca.get("City__c")} for ${vaca.get("Number_Of_Days__C")} days. Starts on ${vaca.get("Start_Date__c")} and cost $${vaca.get("Total_Cost__c")}. <break time="0.5s" /> `;
                     });
                     response.say(text);
                 } else {
